@@ -6,6 +6,7 @@ All reinforcement learning algorithms center around a value estimation of a part
 
 Given these values optimal actions can be chosen by simply selecting the highest next confiugration, or by directly modifying the policy action function.
 ### Double Deep Q Networks
+Q-learning is a type of one-step update involving the value estimation of state-action pairs Q(s,a). A defining feature of Q-learning is that our agent can learn off policy. That is, it can explore suboptimal actions, while still updating our Q(s,a) knowledgebase so that it applies for the optimal action policy. This is possible because our sampled sub-optimal Q(s,a) pairs are bootstrapped from the optimal following Q(s<sup>s'cript</sup>,a) pair (see figure ?). Typically the sampled actions are stored in a state action replay buffer, and updating is done by randomly sampling experiences every few steps to reduce correlations between training data and make training more stable.
 ### Proximal Policy Optimization
 ## Methods
 ### Data Preprecessing
