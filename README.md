@@ -11,6 +11,12 @@ Q-learning is a type of one-step update involving the value estimation of state-
 With Deep Q Networks we use a neural network to predict the Q(s,a) value of encountered configurations. Training minimizes the loss between our predicted Q(s,a) and what its supposed to be if bootsrapped off its descendant (! diagram of training update). Double Deep Q Networks use 2 nearly identical networks to stabilize training by minimizing immidiate chasing of moving targets. By allowing the target R + γQ(s<sup>'</sup>,a) to be predicted by a fixed alternative network, updating the policy network does not immidiately shift the target and allows loss to temporarily converge. The target network is typically an older version of the policy network, with the frequency of its update being a hyperparememter to tune.
 
 ### Proximal Policy Optimization
+Proximal Policy Optimization is a policy gradient method where actions are chosen according to a defined function f(s) = 𝜋(a|s). Our objective is to maximize the value of the policy J(θ), which the expected discounted reward from starting off in a state or state distribution given that policy. To update the policy we need the gradients, which the policy gradient theorom shows that it is proportional to the following equation. (! image of J(θ) gradient proportiaonality). All this equation states is that the gradient of the policy's value to its parameters, is proportional to a weighted mean of the gradient of the policies action probabilities. These action selection probabilities are weighted according to Q(s,a) (gradient is more sensitive to high value state-actions), and μ(s) (the distribution frequency of encountered states following that policy). Notice that there is a conflict of gradients going on here, in that it seems that increasing the probabiity of all actions is the correct solution. In reality, the 𝜋(a|s) probabilities for a state must add to one, so the Q(s,a) weighting factor will naturally increase and decrease the appropriate probabilites.
+
+When training, we do not explicity calculate this equation, rather we assume that our sampled experiences will naturally follow the state distribution μ(s) in expectation. Therefore our update becomes (! equation of update). In PPO we subtract a baseline to reduce the variance of updates (it can be proven that this does not affect the equality), where the baseline is a paramterized value estimate
+
+
+
 ## Methods
 ### Data Preprecessing
 ### Action Space Shaping
