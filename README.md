@@ -20,7 +20,7 @@ When training, we do not explicity calculate this equation, rather we assume tha
 |                      | Raw Data                      | Processed                 | Description |
 |----------------------|-------------------------------|---------------------------|----------|
 | Image Simplification | ![](images/unprocessed.png)   | ![](images/postprocessed.png) |   Greyscale and clip irrelevant regions. Increases training efficiency by focusing compute power.      |
-| Speed Extraction     | ![](images/speed_bar.png) |  speed magnitude ∈ {0,5}  | Sum the pixels of the speed bar and normalize. Speed magnitude is discrete (6 possibilities) due to low image resolution.         |
+| Speed Extraction     | ![](images/speed_bar.png) |  speed magnitude ∈ {0,5}  | Sum pixels of the speed bar and normalize. Magnitude is discrete (6 possibilities) due to low image resolution.         |
 ### Action Space Shaping
 ### Reward Shaping
 ## Model Architecture
