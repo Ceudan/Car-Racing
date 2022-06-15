@@ -17,12 +17,21 @@ When training, we do not explicity calculate this equation, rather we assume tha
 
 ## Methods
 ### Data Preprecessing
-|                      | Raw Data                      | Processed                 | Description |
-|----------------------|-------------------------------|---------------------------|----------|
-| Image Simplification | ![](images/unprocessed.png)   | ![](images/postprocessed.png) |   Greyscale and clip irrelevant regions. Increases training efficiency by focusing compute power.      |
-| Speed Extraction     | ![](images/speed_bar.png) |  speed magnitude ∈ {0,5}  | Sum pixels of the speed bar and normalize. Magnitude is discrete (6 possibilities) due to low image resolution.         |
-### Action Space Shaping
+First, we greyscale and clip regions of the input that have low correlations to performance or are overly complex. This increases training efficiency by focusing more compute on key areas. Second, we extract speed information by summing the pixels of the speed bar and normalizing. We consider this more computationally efficient that passing stacked consecutive frames to the CNN as done by others. Note that speed magnitude is discrete due to image resolution limits.
+
+|                      | Raw Data                    | Processed                     |
+|----------------------|-----------------------------|-------------------------------|
+| Image Simplification | ![](images/unprocessed.png) | ![](images/postprocessed.png) |
+| Speed Extraction     | ![](images/speed_bar.png)   |speed magnitude ∈ {0,1,2,3,4,5} |
+ 
+### Action Space
+|          | Steering Angle | Throttle                                        | Brake   |
+|----------|----------------|-------------------------------------------------|---------|
+| Standard | ∈ [-1,1]       | ∈ [0,1]                                         | ∈ [0,1] |
+| Modified | ∈ {-0.3,0.3}   | = 0.1 if speed<threshold<br/> &nbsp; &nbsp; &nbsp; 0 if speed>=threshold  | = 0     |
+
 ### Reward Shaping
+To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. Given that speed is fixed, the learning task of our model is focused on staying on track.
 ## Model Architecture
 ### Double Deep Q Networks
 ### Proximal Policy Optimization
