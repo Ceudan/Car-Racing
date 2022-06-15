@@ -28,12 +28,25 @@ First, we greyscale and clip regions of the input that have low correlations to 
 |          | Steering Angle | Throttle                                        | Brake   |
 |----------|----------------|-------------------------------------------------|---------|
 | Standard | ∈ [-1,1]       | ∈ [0,1]                                         | ∈ [0,1] |
-| Modified | ∈ {-0.3,0.3}   | = 0.1 if speed<threshold<br/> &nbsp; &nbsp; &nbsp; 0 if speed>=threshold  | = 0     |
+| Modified | ∈ {-0.3,0,0.3}   | = 0.1 if speed<threshold<br/> &nbsp; &nbsp; &nbsp; 0 if speed>=threshold  | = 0     |
 
 ### Reward Shaping
-To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. Given that speed is fixed, the learning task of our model is focused on staying on track.
+To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. Since we fixed speed the learning task of our model focuses on staying on track.
 ## Model Architecture
+Architecture was inspired by (! DDQN paper). Though our action space is simpler, we kept original dimensions for ease of comparisons.
 ### Double Deep Q Networks
+Input = preprocessed image<br/>Output = Q values of steering actions
+| Input Shape | Function                |
+|-------------|--------------------------------|
+| (96,84,1)   | Conv2d + LeakyRelu + Batchnorm |
+| (20,23,8)   | Max-Pooling                    |
+| (10,11,8)   | Conv2d + LeakyRelu + Batchnorm |
+| (12,13,16)  | Max-Pooling                    |
+| (6,6,16)    | LeakyRelu + Flatten            |
+| (576+1)     | speed appended to tensor       |
+| (256)       | LeakyRelu                      |
+| (50)        | LeakyRelu                      |
+| (3)         | Identity                       |
 ### Proximal Policy Optimization
 ## Results and Discussion
 ## Future Works
