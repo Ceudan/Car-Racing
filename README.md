@@ -17,10 +17,10 @@ When training, we do not explicity calculate this equation, rather we assume tha
 
 ## Methods
 ### Data Preprecessing
-|                      | Raw Data                      | Processed                 | Benefits |
+|                      | Raw Data                      | Processed                 | Description |
 |----------------------|-------------------------------|---------------------------|----------|
-| Image Simplification | ![](images/unprocessed.png)   | ![](images/postprocessed.png) |          |
-| Speed Extraction     | ![](images/speed_bar.png) |  single valued tensor containing standardized speed magnitude between 0 and 5  |         |
+| Image Simplification | ![](images/unprocessed.png)   | ![](images/postprocessed.png) |   Greyscale the image and clip regions irrelevant to the model's task. This allows more efficient training by focusing compute power on key areas.      |
+| Speed Extraction     | ![](images/speed_bar.png) |  speed magnitude ∈ {0,5}  | Cut out speed bar and sum the pixels. Normalize range of speed. Unfortunatley speed is discrete (lands on only integers) due to the low resolution images.         |
 ### Action Space Shaping
 ### Reward Shaping
 ## Model Architecture
