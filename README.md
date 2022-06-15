@@ -20,7 +20,7 @@ When training, we do not explicity calculate this equation, rather we assume tha
 |                      | Raw Data                      | Processed                 | Description |
 |----------------------|-------------------------------|---------------------------|----------|
 | Image Simplification | ![](images/unprocessed.png)   | ![](images/postprocessed.png) |   Greyscale the image and clip regions irrelevant to the model's task. This allows more efficient training by focusing compute power on key areas.      |
-| Speed Extraction     | ![](images/speed_bar.png) |  speed magnitude ∈ {0,5}  | Cut out speed bar and sum the pixels. Normalize range of speed. Unfortunatley speed is discrete (lands on only integers) due to the low resolution images.         |
+| Speed Extraction     | ![](images/speed_bar.png) |  speed magnitude ∈ {0,5}  | Extract speed bar and sum the pixels. Normalize range of speed. Value is discrete (6 observations) due to poor image resolution.         |
 ### Action Space Shaping
 ### Reward Shaping
 ## Model Architecture
