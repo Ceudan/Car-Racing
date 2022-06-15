@@ -20,7 +20,7 @@ When training, we do not explicity calculate this equation, rather we assume tha
 |                      | Raw Data                      | Processed                 | Benefits |
 |----------------------|-------------------------------|---------------------------|----------|
 | Image Simplification | ![](images/unprocessed.png)   | ![](images/postprocessed.png) |          |
-| Speed Extraction     | ![](images/speed_bar.png) |                           |          |
+| Speed Extraction     | ![](images/speed_bar.png) |                           | single valued tensor containing standardized speed magnitude between 0 and 5         |
 ### Action Space Shaping
 ### Reward Shaping
 ## Model Architecture
