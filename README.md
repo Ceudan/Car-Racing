@@ -48,5 +48,17 @@ Input = preprocessed image<br/>Output = Q values of steering actions
 | (50)        | LeakyRelu                      |
 | (3)         | Identity                       |
 ### Proximal Policy Optimization
+Input = preprocessed image<br/>Output = beta distribution parameters and V(s) value of state<br/> Note that the fully connected layers diverge for the seperate tasks.
+| Input Shape | Function                |
+|-------------|--------------------------------|
+| (96,84,1)   | Conv2d + LeakyRelu + Batchnorm |
+| (20,23,8)   | Max-Pooling                    |
+| (10,11,8)   | Conv2d + LeakyRelu + Batchnorm |
+| (12,13,16)  | Max-Pooling                    |
+| (6,6,16)    | LeakyRelu + Flatten            |
+| (576+1)     | speed appended to tensor       |
+| (577)       | LeakyRelu                      |
+| (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
+| (2)         | Identity                       |
 ## Results and Discussion
 ## Future Works
