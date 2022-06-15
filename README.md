@@ -19,8 +19,8 @@ When training, we do not explicity calculate this equation, rather we assume tha
 ### Data Preprecessing
 |                      | Raw Data                      | Processed                 | Benefits |
 |----------------------|-------------------------------|---------------------------|----------|
-| Image Simplification | ![](images/unprocessed.png)   | ![](images/processed.png) |          |
-| Speed Extraction     | ![](images/extract_speed.png) |                           |          |
+| Image Simplification | ![](images/unprocessed.png)   | ![](images/postprocessed.png) |          |
+| Speed Extraction     | ![](images/speed_bar.png) |                           |          |
 ### Action Space Shaping
 ### Reward Shaping
 ## Model Architecture
