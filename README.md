@@ -2,11 +2,13 @@
 ## Background
 ## Related Works
 ## Theory
+### Double Deep Q Networks
+### Proximal Policy Optimization
 ## Methods
 ### Data Preprecessing
 ### Action Space Shaping
 ### Reward Shaping
-## Theory
+## Model Architecture
 ### Double Deep Q Networks
 ### Proximal Policy Optimization
 ## Results and Discussion
