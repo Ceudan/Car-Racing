@@ -61,4 +61,9 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
 ## Results and Discussion
+### Double Deep Q Networks
+Our best model obtained an average reward of 850/900 to officially solve the environment. It was able to visit 97% of track tiles travelling at moderate speeds.
+
+We also tested various hyperparameters such as reward decay factor gamma, time discritization length, and speed at identical epislon and learning rate schedules. We observe that the track is easily mastered at moderate speeds, almost never completed at fast speeds, and hardly makes progress at very fast speeds. After careful obervation we conclude that the environment was designed to be impossible to beat at constant speeds, and a winning solution must have a complex dynamic acceleration and braking policy. 
+### Proximal Polixy Optimization
 ## Future Works
