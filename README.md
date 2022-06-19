@@ -6,7 +6,7 @@ All reinforcement learning algorithms center around a value estimation of a part
 ### Double Deep Q Networks
 Q-learning estimates the value of state-action pairs Q(s,a) using one-step updates. A defining feature of Q-learning is that our agent can learn off policy. That is, it can explore suboptimal actions, while still updating our Q(s,a) knowledgebase so that its consistent with the optimal action policy. This is possible because our free to choose sampled Q(s,a) pairs are bootstrapped off the optimal ensuing Q(s<sup>'</sup>,a) pair (see figure ?), regardless of our agents actual trajectory. Memory is stored in action replay buffers, with experiences being randomly selected at training time to reduce inter correlations between data increased training stability.
 
-![visualization of Q-learning update](images/Q-update.png)
+![visualization of Q-learning update](images/Q-update.PNG)
 
 Deep Q Networks we use a neural network to predict the Q(s,a) value of encountered states. Training minimizes the loss between our predicted Q(s,a) and what its theoretical value if bootsrapped off its descendant (! diagram of training update). Double Deep Q Networks stabilize training by allowing the target R + γQ(s<sup>'</sup>,a) to be predicted by an alternative nearly identical network. This avoids immidiate chasing of moving targets where updating the policy network does not immidiately shift the target and allows loss to temporarily converge. The frequency to which to update the target network is a hyperparameter to tune.
 
