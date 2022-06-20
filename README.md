@@ -91,7 +91,7 @@ Our best model averaged a reward of 850/900 to officially solve the environment.
 
 Our testing procedure went as follows. First we searched for an appropriate learning rate and epsilon decay schedule, given a self imposed episode training cap of 360. Below are the settings.
 
-![Graph of Learning Rate Schedule](images/Beta_Distribution.png) ![Graph of Epsilon Schedule](images/Beta_Distribution.png)
+![Graph of Learning Rate Schedule](images/LR_schedule.png) ![Graph of Epsilon Schedule](images/Epsilon_schedule.png)
 
 Second, we compared performance across 3 hyperparameters (travel speed, γ reward decay factor, and time discritization length). We took the max score across a single training run, with a training run taking roughly 45 minutes. First, we trained at medium speeds which easily maxed out the tile visitation rate near 97%, rendering further tuning unnecessary. Next we trained at a fast speed hoping to break the 900 score threshold. However it was deemed impossible to navigate tight corners at this speed and tuning stopped. Finally, we our full hyperparemters and moderate-fast speeds, where we again encountered difficulty navigating tight corners. Below are results.
 
