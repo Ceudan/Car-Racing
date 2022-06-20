@@ -96,6 +96,11 @@ Our testing procedure went as follows. First we searched for an appropriate lear
 Second, we compared performance across 3 hyperparameters (travel speed, γ reward decay factor, and time discritization length). We took the max score across a single training run, with a training run taking roughly 45 minutes. First, we trained at medium speeds which easily maxed out the tile visitation rate near 97%, rendering further tuning unnecessary. Next we trained at a fast speed hoping to break the 900 score threshold. However it was deemed impossible to navigate tight corners at this speed and tuning stopped. Finally, we our full hyperparemters and moderate-fast speeds, where we again encountered difficulty navigating tight corners. Below are results.
 
 2 conculusions were drawn. First, it seems impossible to solve the environment with a fixed or simple speed policy. Likely the environment creators did this on purpose. Second, at the same speed setting, the simpler hyperparameters perform better. This corresponds to higher reward decays (agent must only predict a small time horizon), and longer discritization lengths (agent must make fewer predictions per time period). This is probably due to the fact that our action space is so simple, that our agent does not neet the greater expressive power of the more complex parameter settings. It is possible that our condensed training sessions (45 minutes/360 episodes) were not long enough to capitalize on the greater expressive power. Below is our final training curve, compared to the top DQN implementation.
+
+![Image of our training curve](images/training_curve.png) ![Image of SI training curve](images/SI_training_curve.png)
+
+Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[!reference]. Dotted line shows our total timesteps for comparison.
+
 ### Proximal Polixy Optimization
 ...
 ## Future Works
