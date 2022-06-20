@@ -11,7 +11,7 @@ Q-learning estimates the value of state-action pairs Q(s,a) using one-step updat
 
 ![visualization of Q-learning update](images/Q-update.PNG)
 
-Figure 1: Visualization of Q-update (optimal actions denoted by *).
+Figure 1: Visualization of Q-update (* denotes optimal actions).
 &nbsp;
 
 Deep Q Networks we use a neural network to predict the Q(s,a) value of encountered states. Training minimizes the loss between our predicted Q(s,a) and what its theoretical value if bootsrapped off its descendant (! diagram of training update). Double Deep Q Networks stabilize training by allowing the target R + γQ(s<sup>'</sup>,a) to be predicted by an alternative nearly identical network. This avoids immidiate chasing of moving targets where updating the policy network does not immidiately shift the target and allows loss to temporarily converge. The frequency to which to update the target network is a hyperparameter to tune.
