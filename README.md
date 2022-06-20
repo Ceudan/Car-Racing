@@ -2,6 +2,15 @@
 ## Background
 The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment (environment details here [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). Interestingly I noticed all top implementations required extremely high computational costs. Therefore my research question became, can I achieve similar results and beat the environment at significantly lower computational costs.
 ## Related Works
+Below are top implementations from OpenAI Gym's officially leaderboard that use similar algorithms to ours [[2]](https://github.com/openai/gym/wiki/Leaderboard)).
+| Algorithm    | Training Time              |
+|--------------|----------------------------|
+| PPO          | ≈10,000 episodes<br/>(5*10<sup>6</sup> environment steps)  |
+| DQN          | 900 episodes               |
+| World Models | 10,000+ episodes           |
+| DQN          | ≈3000 episodes<br/>(1.6*10<sup>6</sup> environment steps) |
+
+Less costly implementations include PPO, DQN, AC3 models done by Stanford Students which never surpassed a score of 600 [[3]](https://pdfcoffee.com/reinforcement-car-racing-with-a3c-pdf-free.html), and another PPO which achieved a true score of 820 with 2700 episodes [[4]](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Algorithms/tree/master/CarRacing-From-Pixels-PPO).
 ## Theory
 All reinforcement learning algorithms center around a value estimation of a particular configuration. That is, how much discounted reward can I expect starting off from a particular state V(s), state-action pair Q(s,a), or state distribution J(θ) given a particular policy. These can be estimated in many ways, from one extreme of complete Monte-Carlo rollouts (zero bias, high variance), to the other of one-step bootstrap updates. That is with only information on the difference between adjacent and terminal nodes, there should be only 1 true value graph that we can reconstruct. Optimal actions are chosen by simply selecting the highest next configuration, or by directly modifying an action policy function.
 ### Double Deep Q Networks
