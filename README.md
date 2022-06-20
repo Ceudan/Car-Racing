@@ -35,7 +35,7 @@ First, we greyscale and clip regions of the input that have low correlations to 
 
 |                      | Raw Data                    | Processed                     |
 |----------------------|-----------------------------|-------------------------------|
-| Image Simplification | ![](images/unprocessed.png) | ![](images/postprocessed.png) |
+| Image Simplification | ![](images/unprocessed.png)<br/> &nbsp; &nbsp; &nbsp; (96,96,3) | ![](images/postprocessed.png)<br/> &nbsp; &nbsp; &nbsp; (84,96,1) |
 | Speed Extraction     | ![](images/speed_bar.png)   |speed magnitude ∈ {0,1,2,3,4,5} |
  
 ### Action Space
