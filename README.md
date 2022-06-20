@@ -37,7 +37,7 @@ We used the beta distribution for our policy, which matches well with our 1 dime
 ![Graph of Beta Distribution](images/Beta_Distribution.png)
 
 ## Methods
-To reduce training data required, we need to simplify the learnable relationship which required preprocessing the input data and ouput action space.
+To reduce required training, we need to simplify the learnable relationship. We accomplished this by simplifying the input image, using a novel technique to extract speed information, and reducing the action space by deterministically controlling speed (agent need only control direction).
 ### Data Processing
 First, we greyscale and clip regions of the input that have low correlations to performance or are overly complex. This increases training efficiency by focusing more compute on key areas. Second, we extract speed information by summing the pixels of the speed bar and normalizing. Extracting speed this way is more computationally efficient that passing stacked consecutive frames to the CNN as done by others. However information is lost since speed magnitude precision is limited by image resolution.
 
@@ -53,9 +53,9 @@ First, we greyscale and clip regions of the input that have low correlations to 
 | Modified | ∈ {-0.3,0,0.3}   | = 0.1 if speed<threshold<br/> &nbsp; &nbsp; &nbsp; 0 if speed>=threshold  | = 0     |
 
 ### Reward Shaping
-To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. This relatively high negative reward should make the focus the model on simply staying on track (since speed is fixed).
+To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. This relatively high negative reward should make the model focus on simply staying on track (since speed is fixed).
 ## Model Architecture
-Architecture was inspired by (! DDQN paper). Though our action space is simpler, we kept original dimensions for ease of comparisons.
+DQN and PPO architectures were inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) and [[6]](https://arxiv.org/pdf/2111.02202.pdf) respectively. Our models were likely overparamaterized due to our reduced action space. However we kept their structure for ease of comparison.
 ### Double Deep Q Networks
 Input = preprocessed image<br/>Output = Q values of steering actions
 | Input Shape | Function                |
@@ -83,7 +83,7 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
 ## Results and Discussion
-Overall our double deep Q network was able to higher rewards at a much lower training computational cost than other top implementations.
+We achieved our goal of obtaining a high score at a lower training costs than all other observed implementations (850/900 score at 360 episodes). However our models were not able to break this ceiling and could not officially solve the environment (900 score). In future steps we propose interesting improvements that could help beat the environment while still maintaing our objective of lower compuatational costs.
 
 (PPO...)
 ### Double Deep Q Networks
