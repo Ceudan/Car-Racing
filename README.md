@@ -97,7 +97,7 @@ Second, we compared performance across 3 hyperparameters (travel speed, γ rewar
 
 2 conculusions were drawn. First, it seems impossible to solve the environment with a fixed or simple speed policy. Likely the environment creators did this on purpose. Second, at the same speed setting, the simpler hyperparameters perform better. This corresponds to higher reward decays (agent must only predict a small time horizon), and longer discritization lengths (agent must make fewer predictions per time period). This is probably due to the fact that our action space is so simple, that our agent does not neet the greater expressive power of the more complex parameter settings. It is possible that our condensed training sessions (45 minutes/360 episodes) were not long enough to capitalize on the greater expressive power. Below is our final training curve, compared to the top DQN implementation.
 
-![Image of our training curve](images/training_curve.png) ![Image of SI training curve](images/SI_training_curve.png)
+![Image of our training curve](images/training_curve.PNG) ![Image of SI training curve](images/SI_training_curve.png)
 
 Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[!]. Dotted line shows our total timesteps for comparison.
 
