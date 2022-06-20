@@ -99,7 +99,7 @@ Second, we compared performance across 3 hyperparameters (travel speed, γ rewar
 
 ![Image of our training curve](images/training_curve.PNG) ![Image of SI training curve](images/SI_training_curve.png)
 
-Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[!]. Dotted line shows our total timesteps for comparison.
+Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[!]. Dotted line shows our total timesteps.
 
 https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-9db1-d3487fed0a82.mp4
 
