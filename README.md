@@ -1,13 +1,11 @@
 # Car Racing with various Reinforcement Learning Techniques
 ## Background
-Car Racing is one of many environments in OpenAI Gym, specifically designed to test different learning algorithms [!Link to site]. Observable information is a plan view RGB image of the racecar. The car is controlled with 3 continuos actions, steering angle, throttle magnitude and brake magnitude.
-
-
+The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment. Exact environment details can be found here [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/).
 ## Related Works
 ## Theory
 All reinforcement learning algorithms center around a value estimation of a particular configuration. That is, how much discounted reward can I expect starting off from a particular state V(s), state-action pair Q(s,a), or state distribution J(θ) given a particular policy. These can be estimated in many ways, from one extreme of complete Monte-Carlo rollouts (zero bias, high variance), to the other of one-step bootstrap updates. That is with only information on the difference between adjacent and terminal nodes, there should be only 1 true value graph that we can reconstruct. Optimal actions are chosen by simply selecting the highest next configuration, or by directly modifying an action policy function.
 ### Double Deep Q Networks
-Q-learning estimates the value of state-action pairs Q(s,a) using one-step updates. A defining feature of Q-learning is that our agent can learn off policy. That is, it can explore suboptimal actions, while still updating our Q(s,a) knowledgebase so that its consistent with the optimal action policy. This is possible because our free to choose sampled Q(s,a) pairs are bootstrapped off the optimal ensuing Q(s<sup>'</sup>,a) pair (see figure ?), regardless of our agents actual trajectory. Memory is stored in action replay buffers, with experiences being randomly selected at training time to reduce inter correlations between data increased training stability.
+Q-learning estimates the value of state-action pairs Q(s,a) using one-step updates. A defining feature of Q-learning is that our agent can learn off policy. That is, it can explore suboptimal actions, while still updating our Q(s,a) knowledgebase so that its consistent with the optimal action policy. This is possible because our free to choose sampled Q(s,a) pairs are bootstrapped off the optimal ensuing Q(s<sup>'</sup>,a) pair (see figure ?), regardless of our agents actual trajectory. Memory is stored in action replay buffers, with experiences being randomly selected at training time to reduce inter correlations between data increasing training stability.
 
 ![visualization of Q-learning update](images/Q-update.PNG)
 
@@ -21,7 +19,7 @@ Policy Gradient methods sample actions according to a probability distribution. 
 
 ![Policy Gradient Equation](images/Policy_Gradient_Equation.png)
 
-Proximal Policy Optimization is a type of actor-critic twist on the policy gradient theory. The actor network outputs parameters of the action policy as discussed above. The critic network outputs its value estimation of states which is used in updating. Looking at our policy loss we can see that we subtracted our critic's value estimation from our exprienced return Gt. This advantage function stabilizes updates by standardizing the feedback signal (it can be shown that subtracting a baseline does not affect the gradient proportionality). Inuitively, if Gt-V(s) is positive, we experienced more reward than expected, so we increase the probability of recent actions and vice versa. The critic network gets updated by the critic loss. Often the actor and critic share layers, so the terms are combined. The entropy of the policy distribution is added to discourage it from collapsing and encourage exploration. Finally we increase stability by wrapping the policy loss with the CLIP function which bounds the magnitude of single updates. The original PPO paper can be found here [[1]](https://arxiv.org/pdf/1707.06347.pdf).
+Proximal Policy Optimization is a type of actor-critic twist on the policy gradient theory. The actor network outputs parameters of the action policy as discussed above. The critic network outputs its value estimation of states which is used in updating. Looking at our policy loss we can see that we subtracted our critic's value estimation from our exprienced return Gt. This advantage function stabilizes updates by standardizing the feedback signal (it can be shown that subtracting a baseline does not affect the gradient proportionality). Inuitively, if Gt-V(s) is positive, we experienced more reward than expected, so we increase the probability of recent actions and vice versa. The critic network gets updated by the critic loss. Often the actor and critic share layers, so the terms are combined. The entropy of the policy distribution is added to discourage it from collapsing and encourage exploration. Finally we increase stability by wrapping the policy loss with the CLIP function which bounds the magnitude of single updates. The original PPO paper can be found here [[2]](https://arxiv.org/pdf/1707.06347.pdf).
 
 ![Proximal Policy Optimization Equation](images/PPO_equation.png)
 
@@ -31,7 +29,7 @@ We used the beta distribution for our policy, which matches well with our 1 dime
 
 ## Methods
 ### Data Preprecessing
-First, we greyscale and clip regions of the input that have low correlations to performance or are overly complex. This increases training efficiency by focusing more compute on key areas. Second, we extract speed information by summing the pixels of the speed bar and normalizing. We consider this more computationally efficient that passing stacked consecutive frames to the CNN as done by others. Note that speed magnitude is discrete due to image resolution limits.
+First, we greyscale and clip regions of the input that have low correlations to performance or are overly complex. This increases training efficiency by focusing more compute on key areas. Second, we extract speed information by summing the pixels of the speed bar and normalizing. Extracting speed this way is more computationally efficient that passing stacked consecutive frames to the CNN as done by others. However information is lost since speed magnitude precision is limited by image resolution.
 
 |                      | Raw Data                    | Processed                     |
 |----------------------|-----------------------------|-------------------------------|
@@ -45,7 +43,7 @@ First, we greyscale and clip regions of the input that have low correlations to 
 | Modified | ∈ {-0.3,0,0.3}   | = 0.1 if speed<threshold<br/> &nbsp; &nbsp; &nbsp; 0 if speed>=threshold  | = 0     |
 
 ### Reward Shaping
-To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. Since we fixed speed the learning task of our model focuses on staying on track.
+To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. This relatively high negative reward should make the focus the model on simply staying on track (since speed is fixed).
 ## Model Architecture
 Architecture was inspired by (! DDQN paper). Though our action space is simpler, we kept original dimensions for ease of comparisons.
 ### Double Deep Q Networks
@@ -75,9 +73,13 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
 ## Results and Discussion
+Overall our double deep Q network was able to higher rewards at a much lower training computational cost than other top implementations.
+
+(PPO...)
 ### Double Deep Q Networks
 Our best model obtained an average reward of 850/900 to officially solve the environment. It was able to visit 97% of track tiles travelling at moderate speeds.
 
 We also tested various hyperparameters such as reward decay factor gamma, time discritization length, and speed at identical epislon and learning rate schedules. Simpler hyperparamter settings yielded the best performance. This corresponds to higher reward decays, and longer discritization lengths (! top left of table). It is possible that our short training sessions (30 minutes/360 episodes) was not sufficient to capitalize on the greater expressive power of more complex hyperparemeters. With regards to speed,  we observe that the track is easily mastered at moderate speeds, almost never completed at fast speeds, and hardly makes progress at very fast speeds. Specifically, the car would skid out at turns and contact with grass. We infered that the environment designers implied for dynamic braking and acceleration policy to be required in the winning solution.
 ### Proximal Polixy Optimization
+...
 ## Future Works
