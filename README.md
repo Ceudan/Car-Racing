@@ -83,13 +83,19 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
 ## Results and Discussion
-We succesfully achieved our goal of obtaining a high score at a lower training costs than all other observed implementations (850/900 score at 360 episodes). However our models were not able to break this ceiling and officially solve the environment (900 score). In future steps we propose interesting improvements that could help beat the environment while still maintaing our objective of lower compuatational costs.
+We succesfully achieved our goal of becoming familiar with reinforcement learning algorithms and libraries, while also obtaining a high environemnt score at lower training costs than other observed implementations (850/900 score at 360 episodes). Still our models were not able to break this ceiling and officially solve the environment (900 score). In future steps...
 
 (PPO...)
 ### Double Deep Q Networks
-Our best model obtained an average reward of 850/900 to officially solve the environment. It was able to visit 97% of track tiles travelling at moderate speeds.
+Our best model averaged a reward of 850/900 to officially solve the environment. It was able to visit 97% of track tiles travelling at moderate speeds.
 
-We also tested various hyperparameters such as reward decay factor gamma, time discritization length, and speed at identical epislon and learning rate schedules. Simpler hyperparamter settings yielded the best performance. This corresponds to higher reward decays, and longer discritization lengths (! top left of table). It is possible that our short training sessions (30 minutes/360 episodes) was not sufficient to capitalize on the greater expressive power of more complex hyperparemeters. With regards to speed,  we observe that the track is easily mastered at moderate speeds, almost never completed at fast speeds, and hardly makes progress at very fast speeds. Specifically, the car would skid out at turns and contact with grass. We infered that the environment designers implied for dynamic braking and acceleration policy to be required in the winning solution.
+Our testing procedure went as follows. First we searched for an appropriate learning rate and epsilon decay schedule, given a self imposed episode training cap of 360. Below are the settings.
+
+Second, we compared performance across 3 hyperparameters (travel speed, γ reward decay factor, and time discritization length). We took the max score across a single training run, with a training run taking roughly 45 minutes. First, we trained at medium speeds which easily maxed out the tile visitation rate near 97%, rendering further tuning unnecessary. Next we trained at a fast speed hoping to break the 900 score threshold. However it was deemed impossible to navigate tight corners at this speed and tuning stopped. Finally, we our full hyperparemters and moderate-fast speeds, where we again encountered difficulty navigating tight corners. Below are results.
+
+
+
+2 conculusions were drawn. First, it seems impossible to solve the environment with a fixed or simple speed policy. Likely the environment creators did this on purpose. Second, at the same speed setting, the simpler hyperparameters perform better. This corresponds to higher reward decays (agent must only predict a small time horizon), and longer discritization lengths (agent must make fewer predictions per time period). This is probably due to the fact that our action space is so simple, that our agent does not neet the greater expressive power of the more complex parameter settings. It is possible that our condensed training sessions (45 minutes/360 episodes) were not long enough to capitalize on the greater expressive power. Below is our final training curve, compared to the top DQN implementation.
 ### Proximal Polixy Optimization
 ...
 ## Future Works
