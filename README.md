@@ -1,6 +1,6 @@
 # Car Racing with various Reinforcement Learning Techniques
 ## Background
-The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment. Exact environment details can be found here [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/).
+The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment (environment details here [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). Interestingly I noticed all top implementations required extremely high computational costs. Therefore my research question became, can I achieve similar results and beat the environment at significantly lower computational costs.
 ## Related Works
 ## Theory
 All reinforcement learning algorithms center around a value estimation of a particular configuration. That is, how much discounted reward can I expect starting off from a particular state V(s), state-action pair Q(s,a), or state distribution J(θ) given a particular policy. These can be estimated in many ways, from one extreme of complete Monte-Carlo rollouts (zero bias, high variance), to the other of one-step bootstrap updates. That is with only information on the difference between adjacent and terminal nodes, there should be only 1 true value graph that we can reconstruct. Optimal actions are chosen by simply selecting the highest next configuration, or by directly modifying an action policy function.
@@ -28,7 +28,8 @@ We used the beta distribution for our policy, which matches well with our 1 dime
 ![Graph of Beta Distribution](images/Beta_Distribution.png)
 
 ## Methods
-### Data Preprecessing
+To reduce training data required, we need to simplify the learnable relationship which required preprocessing the input data and ouput action space.
+### Data Processing
 First, we greyscale and clip regions of the input that have low correlations to performance or are overly complex. This increases training efficiency by focusing more compute on key areas. Second, we extract speed information by summing the pixels of the speed bar and normalizing. Extracting speed this way is more computationally efficient that passing stacked consecutive frames to the CNN as done by others. However information is lost since speed magnitude precision is limited by image resolution.
 
 |                      | Raw Data                    | Processed                     |
