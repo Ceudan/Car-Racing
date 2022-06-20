@@ -1,6 +1,6 @@
 # Car Racing with various Reinforcement Learning Techniques
 ## Background
-The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment (environment details here [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). Interestingly I noticed all top implementations required extremely high computational costs. Therefore my research question became, can I achieve similar results and beat the environment at significantly lower computational costs.
+The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). Interestingly I noticed all top implementations required extremely high computational costs. Therefore my research question became, can I achieve similar results and beat the environment at significantly lower computational costs.
 ## Related Works
 Below are top implementations from OpenAI Gym's officially leaderboard that use similar algorithms to ours [[2]](https://github.com/openai/gym/wiki/Leaderboard)).
 | Algorithm    | Training Time              |
@@ -83,7 +83,7 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
 ## Results and Discussion
-We succesfully achieved our goal of becoming familiar with reinforcement learning algorithms and libraries, while also obtaining a high environemnt score at lower training costs than other observed implementations (850/900 score at 360 episodes). Still our models were not able to break this ceiling and officially solve the environment (900 score). In future steps...
+We succesfully achieved our goal of becoming familiar with reinforcement learning algorithms and libraries, while also obtaining a high score at lower training costs than others (850/900 score at 360 episodes). Still our models were not able to break this ceiling and officially solve the environment (900 score). In future steps...
 
 (PPO...)
 ### Double Deep Q Networks
@@ -92,8 +92,6 @@ Our best model averaged a reward of 850/900 to officially solve the environment.
 Our testing procedure went as follows. First we searched for an appropriate learning rate and epsilon decay schedule, given a self imposed episode training cap of 360. Below are the settings.
 
 Second, we compared performance across 3 hyperparameters (travel speed, γ reward decay factor, and time discritization length). We took the max score across a single training run, with a training run taking roughly 45 minutes. First, we trained at medium speeds which easily maxed out the tile visitation rate near 97%, rendering further tuning unnecessary. Next we trained at a fast speed hoping to break the 900 score threshold. However it was deemed impossible to navigate tight corners at this speed and tuning stopped. Finally, we our full hyperparemters and moderate-fast speeds, where we again encountered difficulty navigating tight corners. Below are results.
-
-
 
 2 conculusions were drawn. First, it seems impossible to solve the environment with a fixed or simple speed policy. Likely the environment creators did this on purpose. Second, at the same speed setting, the simpler hyperparameters perform better. This corresponds to higher reward decays (agent must only predict a small time horizon), and longer discritization lengths (agent must make fewer predictions per time period). This is probably due to the fact that our action space is so simple, that our agent does not neet the greater expressive power of the more complex parameter settings. It is possible that our condensed training sessions (45 minutes/360 episodes) were not long enough to capitalize on the greater expressive power. Below is our final training curve, compared to the top DQN implementation.
 ### Proximal Polixy Optimization
