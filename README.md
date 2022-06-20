@@ -83,7 +83,7 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
 ## Results and Discussion
-We achieved our goal of obtaining a high score at a lower training costs than all other observed implementations (850/900 score at 360 episodes). However our models were not able to break this ceiling and could not officially solve the environment (900 score). In future steps we propose interesting improvements that could help beat the environment while still maintaing our objective of lower compuatational costs.
+We succesfully achieved our goal of obtaining a high score at a lower training costs than all other observed implementations (850/900 score at 360 episodes). However our models were not able to break this ceiling and officially solve the environment (900 score). In future steps we propose interesting improvements that could help beat the environment while still maintaing our objective of lower compuatational costs.
 
 (PPO...)
 ### Double Deep Q Networks
