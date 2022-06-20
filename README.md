@@ -16,10 +16,11 @@ Deep Q Networks we use a neural network to predict the Q(s,a) value of encounter
 ### Proximal Policy Optimization
 Policy Gradient methods sample actions according to a probability distribution. The parameters of the probability distribution can be output by a neural network. Our objective is to maximize the value of the policy J(θ), which is the expected discounted reward from starting off in a state distribution given that policy. To update the policy we need the gradients, which is shown in figure 2. All this equation states is that the gradient of the policy's value to its parameters, is proportional to a weighted mean of the gradient of the policy's actions probabilities. These action probabilities are weighted according to Q(s,a) (J(θ) is more sensitive to high valued actions), and μ(s) (the distribution frequency of encountered states for that policy). Notice that it seems that increasing the probabiity of all actions is the correct solution. In reality, the 𝜋(a|s) probabilities for a state must add to one, so the Q(s,a) weighting factor will naturally increase and decrease the appropriate probabilites. When training, we do not explicity calculate μ(s), rather we assume that our sampled experiences will naturally follow the state distribution μ(s) in expectation. We also only sample a particular action per state visit instead of the summation, and we introduce the denominator to reweigh disproportionally sample actions. Finally, we can replace Q(s,a) with real sampled future rewards.
 
-
-
+![Policy Gradient Equation](images/Policy_Gradient_Equation.png)
 
 Proximal Policy Optimization is a type of actor-critic twist on the policy gradient theory. The actor network outputs parameters of the action policy as discussed above. The critic network outputs its value estimation of states which is used in updating. Looking at our policy loss we can see that we replaced Gt with a stable standardized advantage function of Gt-V(s) (it can be shown that subtracting a baseline does not affect the gradient proportionality). Inuitively, if Gt-V(s) is positive, we experienced more reward than expected, so we increase the reward of recent actions and vice versa. The critic network gets updated by the critic loss. Often the actor and critic share layers, so the terms are combined. The entropy of the policy distribution is added to discourage it from collapsing and encourage exploration. Finally we increase stability by wrapping the policy loss with the CLIP function which bounds the maginutide of single updates. The generalized PPO update formula can be found here.
+
+![Proximal Policy Optimization Equation](images/PPO_equation.png)
 
 ## Methods
 ### Data Preprecessing
