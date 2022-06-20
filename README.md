@@ -1,5 +1,8 @@
 # Car Racing with various Reinforcement Learning Techniques
 ## Background
+Car Racing is one of many environments in OpenAI Gym, specifically designed to test different learning algorithms [!Link to site]. Observable information is a plan view RGB image of the racecar. The car is controlled with 3 continuos actions, steering angle, throttle magnitude and brake magnitude.
+
+
 ## Related Works
 ## Theory
 All reinforcement learning algorithms center around a value estimation of a particular configuration. That is, how much discounted reward can I expect starting off from a particular state V(s), state-action pair Q(s,a), or state distribution J(θ) given a particular policy. These can be estimated in many ways, from one extreme of complete Monte-Carlo rollouts (zero bias, high variance), to the other of one-step bootstrap updates. That is with only information on the difference between adjacent and terminal nodes, there should be only 1 true value graph that we can reconstruct. Optimal actions are chosen by simply selecting the highest next configuration, or by directly modifying an action policy function.
@@ -22,7 +25,7 @@ Proximal Policy Optimization is a type of actor-critic twist on the policy gradi
 
 ![Proximal Policy Optimization Equation](images/PPO_equation.png)
 
-We decided to use the beta distribution for our policy, which matches well with our 1 dimensionsal bounded action space.
+We used the beta distribution for our policy, which matches well with our 1 dimensionsal bounded action space.
 
 ![Graph of Beta Distribution](images/Beta_Distribution.png)
 
