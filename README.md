@@ -1,4 +1,4 @@
-# Car Racing with various Reinforcement Learning Techniques
+# Learning Reinforcement Learning via Car Racing
 ## Background
 The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). Interestingly I noticed all top implementations required extremely high computational costs. Therefore my research question became, can I achieve similar results and beat the environment at significantly lower computational costs.
 ## Related Works
@@ -87,19 +87,27 @@ We succesfully achieved our goal of becoming familiar with reinforcement learnin
 
 (PPO...)
 ### Double Deep Q Networks
-Our best model averaged a reward of 850/900 to officially solve the environment. It was able to visit 97% of track tiles travelling at moderate speeds.
+Our best model averaged a reward of 850/900 to officially solve the environment. It was able to visit 97% of track tiles travelling at moderate speeds. We did not perform an in-depth hyperparamter search on this DQN, as it was clear that a more complex action space was required to beat the environment.
 
-Our testing procedure went as follows. First we searched for an appropriate learning rate and epsilon decay schedule, given a self imposed episode training cap of 360. Below are the settings.
+First we searched for an appropriate learning rate and epsilon decay schedule for a self-imposed training cap of 360 episodes. We tested all setups on the control hyperparameters below.
 
 ![Graph of Learning Rate Schedule](images/LR_schedule.png) ![Graph of Epsilon Schedule](images/Epsilon_schedule.png)
 
-Second, we compared performance across 3 hyperparameters (travel speed, γ reward decay factor, and time discritization length). We took the max score across a single training run, with a training run taking roughly 45 minutes. First, we trained at medium speeds which easily maxed out the tile visitation rate near 97%, rendering further tuning unnecessary. Next we trained at a fast speed hoping to break the 900 score threshold. However it was deemed impossible to navigate tight corners at this speed and tuning stopped. Finally, we our full hyperparemters and moderate-fast speeds, where we again encountered difficulty navigating tight corners. Below are results.
+Second, we compared performance across 3 other hyperparameters (travel speed, γ reward decay factor, and time discritization length). At moderate speeds, time discritization length = 0.1 seconds, and gamma = 0.92 the car almost always completed the track, averaging a score of 850. At the same settings but at a higher speed, but the car was unable to navigate sharp turns capping performance at 394. Finally, we tested the critical speed we calculated was the bare minimum to obtain a score of 900 if all tiles are visited. Unfortunately the car could not stay on track at this crtical speed (hyperparameters searched shown below).
 
-2 conculusions were drawn. First, it seems impossible to solve the environment with a fixed or simple speed policy. Likely the environment creators did this on purpose. Second, at the same speed setting, the simpler hyperparameters perform better. This corresponds to higher reward decays (agent must only predict a small time horizon), and longer discritization lengths (agent must make fewer predictions per time period). This is probably due to the fact that our action space is so simple, that our agent does not neet the greater expressive power of the more complex parameter settings. It is possible that our condensed training sessions (45 minutes/360 episodes) were not long enough to capitalize on the greater expressive power. Below is our final training curve, compared to the top DQN implementation.
+| **Scores**                     |              | **Time for gamma to decay to 20%** |             |           |
+|--------------------------------|--------------|------------------------------------|-------------|-----------|
+|                                |              | **1.2 sec**                        | **1.9 sec** | **3 sec** |
+| **Time Discretization Length** | **0.1 sec**  | 610                                | 599         | 572       |
+|                                | **0.06 sec** | 211                                | 569         | 375       |
+
+Table 1. Hyperparameter search at the critical minimum speed required for a score of 900.
+
+2 conculusions were drawn. First, it seems impossible to solve the environment with a simple speed policy. Likely the environment creators did this on purpose. Second, at the same speed setting, the simpler hyperparameters perform better. This corresponds to higher reward decays (agent must only predict a small time horizon), and longer discritization lengths (agent must make fewer predictions per time period). Its possible that action space is so simple, our agent does not neet the greater expressive power of the more complex settings. It is possible that our condensed training sessions (45 minutes/360 episodes) were not long enough to capitalize on the greater expressive power. Below is our training curve at our best settings, compared to the top DQN implementation.
 
 ![Image of our training curve](images/training_curve.PNG) ![Image of SI training curve](images/SI_training_curve.png)
 
-Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[!]. Dotted line shows our total timesteps.
+Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[!]. Dotted line marks our timesteps taken.
 
 https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-9db1-d3487fed0a82.mp4
 
