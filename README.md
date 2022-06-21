@@ -1,6 +1,6 @@
 # Learning Reinforcement Learning via Car Racing
 ## Background
-The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). Interestingly I noticed all top implementations required extremely high computational costs. Therefore my research question became, can I achieve similar results and beat the environment at significantly lower computational costs.
+The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). While exploring, I gave myself a research question to encourage novel ideas and not simply copy other implementations. That is, can I obtain relatively high results at a significantly lower computational cost than others?
 ## Related Works
 Below are top implementations from OpenAI Gym's officially leaderboard that use similar algorithms to ours [[2]](https://github.com/openai/gym/wiki/Leaderboard)).
 | Algorithm    | Training Time              |
@@ -8,9 +8,9 @@ Below are top implementations from OpenAI Gym's officially leaderboard that use 
 | PPO          | ≈10,000 episodes<br/>(5*10<sup>6</sup> environment steps)  |
 | DQN          | 900 episodes               |
 | World Models | 10,000+ episodes           |
-| DQN          | ≈3000 episodes<br/>(1.6*10<sup>6</sup> environment steps) |
+| DQN          | ≈3000 episodes<br/>(1.6*10<sup>6</sup> environment steps)<br/>**30 hours** |
 
-Less costly implementations include PPO, DQN, AC3 models done by Stanford Students which never surpassed a score of 600 [[3]](https://pdfcoffee.com/reinforcement-car-racing-with-a3c-pdf-free.html), and another PPO which achieved a true score of 820 with 2700 episodes [[4]](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Algorithms/tree/master/CarRacing-From-Pixels-PPO).
+Poorer performing and less costly implementations include PPO, DQN, AC3 models done by Stanford Students which never surpassed a score of 600 [[3]](https://pdfcoffee.com/reinforcement-car-racing-with-a3c-pdf-free.html), and another PPO which achieved a true score of 820 with 2700 episodes [[4]](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Algorithms/tree/master/CarRacing-From-Pixels-PPO).
 ## Theory
 All reinforcement learning algorithms center around a value estimation of a particular configuration. That is, how much discounted reward can I expect starting off from a particular state V(s), state-action pair Q(s,a), or state distribution J(θ) given a particular policy. These can be estimated in many ways, from one extreme of complete Monte-Carlo rollouts (zero bias, high variance), to the other of one-step bootstrap updates. That is with only information on the difference between adjacent and terminal nodes, there should be only 1 true value graph that we can reconstruct. Optimal actions are chosen by simply selecting the highest next configuration, or by directly modifying an action policy function.
 ### Double Deep Q Networks
@@ -93,7 +93,7 @@ First we searched for an appropriate learning rate and epsilon decay schedule fo
 
 ![Graph of Learning Rate Schedule](images/LR_schedule.png) ![Graph of Epsilon Schedule](images/Epsilon_schedule.png)
 
-Second, we compared performance across 3 other hyperparameters (travel speed, γ reward decay factor, and time discritization length). At moderate speeds, time discritization length = 0.1 seconds, and gamma = 0.92 the car almost always completed the track, averaging a score of 850. At the same settings but at a higher speed, but the car was unable to navigate sharp turns capping performance at 394. Finally, we tested the critical speed we calculated was the bare minimum to obtain a score of 900 if all tiles are visited. Unfortunately the car could not stay on track at this crtical speed (hyperparameters searched shown below).
+Second, we compared performance across 3 other hyperparameters (travel speed, γ reward decay factor, and time discritization length). At moderate speeds, time discritization length = 0.1 seconds, and gamma = 0.92 the car almost always completed the track (97% tiles visited), averaging a score of 850. At the same settings but at a higher speed, the car was unable to navigate sharp turns capping performance at 394. Finally, we tested at a critical speed we calculated as the bare minimum to obtain a score of 900 assuming all tiles are visited. Unfortunately the car could not stay on track at this crtical speed (hyperparameters searched shown below).
 
 | **Scores**                     |              | **Time for gamma to decay to 20%** |             |           |
 |--------------------------------|--------------|------------------------------------|-------------|-----------|
@@ -101,13 +101,13 @@ Second, we compared performance across 3 other hyperparameters (travel speed, γ
 | **Time Discretization Length** | **0.1 sec**  | 610                                | 599         | 572       |
 |                                | **0.06 sec** | 211                                | 569         | 375       |
 
-Table 1. Hyperparameter search at the critical minimum speed required for a score of 900.
+Table 1. Hyperparameter search at the critical minimum speed required to beat environment.
 
 2 conculusions were drawn. First, it seems impossible to solve the environment with a simple speed policy. Likely the environment creators did this on purpose. Second, at the same speed setting, the simpler hyperparameters perform better. This corresponds to higher reward decays (agent must only predict a small time horizon), and longer discritization lengths (agent must make fewer predictions per time period). Its possible that action space is so simple, our agent does not neet the greater expressive power of the more complex settings. It is possible that our condensed training sessions (45 minutes/360 episodes) were not long enough to capitalize on the greater expressive power. Below is our training curve at our best settings, compared to the top DQN implementation.
 
 ![Image of our training curve](images/training_curve.PNG) ![Image of SI training curve](images/SI_training_curve.png)
 
-Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[!]. Dotted line marks our timesteps taken.
+Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[[4]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). Dotted line marks our timesteps taken.
 
 https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-9db1-d3487fed0a82.mp4
 
@@ -116,3 +116,7 @@ Video of my model's performance.
 ### Proximal Polixy Optimization
 ...
 ## Future Works
+### Improving Stability
+We observed that our model's performance frequently crashed during training. This is likely due to a modal collapse. Since the data distribution is generated by the agent itself, a self-reinforcing cycle of poor data then poor training is possible. We can tackle this by attempting simpler networks (more generalized value estimation), larger action replay buffers (more even sampling) and a less aggressive learning curve.
+### Beating the Environment at Low Costs
+Our work showed that with a simple action space (no speed control), models can easily obtain high scores. Otherwise a single network controlling steering, acceleration and braking requires huge training costs as shown by others. Perhaps by having steering and speed controlled by 2 independantly trained simple networks, the learnable relationship can still be kept simple, allowing the environment to be beat at low training cost.
