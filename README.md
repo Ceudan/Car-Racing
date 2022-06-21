@@ -99,7 +99,7 @@ Second, we compared performance across 3 other hyperparameters (travel speed, γ
 |--------------------------------|--------------|------------------------------------|-------------|-----------|
 |                                |              | **1.2 sec**                        | **1.9 sec** | **3 sec** |
 | **Time Discretization Length** | **0.1 sec**  | 610                                | 599         | 572       |
-|                                | **0.06 sec** | 211                                | 569         | 375       |
+|                                | **0.06 sec** | 211(\*possible mistake)                                | 569         | 375       |
 
 Table 1. Hyperparameter search at the critical minimum speed required to beat environment.
 
