@@ -1,6 +1,6 @@
 # Learning Reinforcement Learning via Car Racing
 ## Background
-The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). While exploring, I gave myself a research question to encourage novel ideas and not simply copy other implementations. That is, can I obtain relatively high results at a significantly lower computational cost than others?
+The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). While exploring, I gave myself a research question to avoid simply copying other's implementations. That is, can I obtain high results at a significantly lower computational cost than others?
 ## Related Works
 Below are top implementations from OpenAI Gym's officially leaderboard that use similar algorithms to ours [[2]](https://github.com/openai/gym/wiki/Leaderboard)).
 | Algorithm    | Training Time              |
