@@ -130,7 +130,7 @@ Video of DDQN performance.
 
 ### Proximal Polixy Optimization
 
-For PPO we performed a similar hyperparameter search as DDQN for each training stage. For simplicity we will not go over those results. 
+We performed a similar hyperparameter search as DDQN which is not shown again.
 
 As discussed in methods, we first trained the PPO steering model with simple speed control. It easily obtained high scores quickly (860/900 after ? episodes, similar to DDQN). Next, we fixed the steering model and trained the thrust model. One interesting parameter we tuned was the addition of a constant to the softplus output (beta distribution parameters). We found that forcing concave-like shapes (+5) initially accelarated training by avoiding extreme actions, however the agent could not handle the broad uncertainty during finetuning. Allowing uni-modal convex shapes (+1) produced better fine-tuning results. Inuitively we allowed the model to switch between hard acceleration/breaking with great certainty in the sampling outcome. Otherwise it would have to balance some sort of probability mass near the middle.
 
