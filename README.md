@@ -2,28 +2,18 @@
 ## Background
 The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Approximation algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). While exploring, I gave myself a research question to avoid simply copying other's implementations. That is, can I obtain high results at a significantly lower computational cost than others?
 ## Related Works
-Below are top implementations from OpenAI Gym's officially leaderboard that use similar algorithms to ours [[2]](https://github.com/openai/gym/wiki/Leaderboard)).
-| Algorithm    |100 Episode Average Score| Training Time              |
-|--------------|----------------------------|-----------------------------|
-| PPO          | 913|≈10,000 episodes<br/>(5*10<sup>6</sup> environment steps)  |
-| DQN          | |900 episodes               |
-| World Models | |10,000+ episodes           |
-| DQN          | |≈3000 episodes<br/>(1.6*10<sup>6</sup> environment steps)<br/>**30 hours** |
+Below are some of the top implementations from OpenAI Gym's official leaderboard [[2]](https://github.com/openai/gym/wiki/Leaderboard)).
 
 
-
-| Model                                 | Training Cost | 100-Episode Average Score | Write-up                                                                                                                               | Video | 
-|---------------------------------------|-----------------------|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------|-------| 
-| PPO | N/A                   | 913 | [writeup](https://arxiv.org/abs/2111.02202) |       | 
-| DDQN | 900                   | 907 | [writeup](https://github.com/AMD-RIPS/RL-2018/blob/master/documents/leaderboard/IPAM-AMD-Car_Racing.ipynb) | [Video](https://drive.google.com/file/d/1DQU4yCsq6nbVJB6WKoXlED9YFGDselIu/view)     |
-| World Models | 10,000+ episodes | 906  | [writeup](https://worldmodels.github.io) | [Videos](http://blog.otoro.net/2018/06/09/world-models-experiments/) |  
-| PPO | 2760 |820 (*Retested Score) | [writeup](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Udacity/tree/master/CarRacing-From-Pixels-PPO) | [Video](https://www.youtube.com/watch?v=55buBR2pPdc) |
-| Weight Agnostic Neural Networks | N/A | 893  | [writeup](https://weightagnostic.github.io) | [video](https://weightagnostic.github.io) |
-| [jperod](https://github.com/jperod/) | ≈3000 episodes<br/>(1.6*10<sup>6</sup> environment steps)<br/>**30 hours** | 905  | [writeup](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) | [Video](https://youtu.be/C9CZpbuOz04)     |
-| [JinayJain](https://github.com/JinayJain/) | 5000 episodes | 909 | [writeup](https://github.com/JinayJain/deep-racing) | [video](https://youtu.be/s1uKkmNiNhM)
-
-
-(*) They used reward shaping (added some score back when the agent dies) during training to make training work better, but unfortunately kept the artificial shaped score for evaluation. When testing their agent using their model (and also trying to train it from scratch, which performed worse), we got a score of 820. We have filed an [issue](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Udacity/issues/3). We found a similar problem with another PPO repo [here](https://github.com/xtma/pytorch_car_caring/issues/2).
+| Model                                 | Training Episodes | 100-Episode Average Score | Write-up |                                                                                                                           
+|---------------------------------------|-----------------------|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| PPO |≈10,000<br/>(5*10<sup>6</sup> environment steps)| 913 | [writeup](https://arxiv.org/abs/2111.02202) |
+| DDQN | 900                 | 907 | [writeup](https://github.com/AMD-RIPS/RL-2018/blob/master/documents/leaderboard/IPAM-AMD-Car_Racing.ipynb) |
+| World Models | 10,000+ | 906  | [writeup](https://worldmodels.github.io) | 
+| PPO | 2760 |820 (*actual) | [writeup](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Udacity/tree/master/CarRacing-From-Pixels-PPO) | 
+| Weight Agnostic Neural Networks | N/A | 893  | [writeup](https://weightagnostic.github.io) | 
+| PPO | ≈3000<br/>(1.6*10<sup>6</sup> environment steps) | 905  | [writeup](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) | 
+| PPO | 5000 | 909 | [writeup](https://github.com/JinayJain/deep-racing) | 
 
 Poorer performing and less costly implementations include PPO, DQN, AC3 models done by Stanford Students which never surpassed a score of 600 [[3]](https://pdfcoffee.com/reinforcement-car-racing-with-a3c-pdf-free.html), and another PPO which achieved a true score of 820 with 2700 episodes [[4]](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Algorithms/tree/master/CarRacing-From-Pixels-PPO).
 ## Theory
