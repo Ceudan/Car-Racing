@@ -126,7 +126,6 @@ Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[[
 
 https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-9db1-d3487fed0a82.mp4
 
-Video of DDQN performance.
 
 ### Proximal Polixy Optimization
 
