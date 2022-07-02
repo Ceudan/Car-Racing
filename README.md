@@ -75,9 +75,11 @@ Input = preprocessed image<br/>Output = Q values of steering actions
 #### Action Space
 For PPO we split the action space into 2 independantly controlled tasks. That is, we have 1 actor critic netowrk controlling steering, and another identically structured model controlling gas and braking. This is a novel technique never before encountered for the CarRacing environment. Training was done by first training the steering network, with speed controlled by the same deterministic rules used for DDQN. Then, we fixed the steering network, and trained the thrust network. Both networks used the beta distribution, which corresponds nicely with our 1 dimensional bounded action space. Additionally, in training we stochastically sampled actions, while in testing we deterministically used the mean of the distributions for stability. Its difficult to train distributions by sampling the mean due to lack of variance in explored actions.
 
+![Graph of Beta Distribution](images/Beta_Distribution.png) 
+
 Instead of the advantage function Gt-V(s), we used A<sup>GAE</sup>. λ controls the depth to bootstrap, with the infinite summation of its relative weights adding to 1. γ is the usual decay rate of future rewards. 
 
-![Graph of Beta Distribution](images/Beta_Distribution.png) ![Equation of our advantage function](images/A_GAE.PNG) 
+![Equation of our advantage function](images/A_GAE.PNG) 
 
 #### Training Setup
 PPO architecture was inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) and [[6]](https://arxiv.org/pdf/2111.02202.pdf) respectively. Our model is likely overparamaterized since we simplified the action space and no longer pass in stacked frames. However we kept their structure for ease of comparison.
