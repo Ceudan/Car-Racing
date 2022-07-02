@@ -33,13 +33,9 @@ Policy Gradient methods sample actions according to a probability distribution. 
 
 ![Policy Gradient Equation](images/Policy_Gradient_Equation.png)
 
-Proximal Policy Optimization is a type of actor-critic twist on the policy gradient theory. The actor network outputs parameters of the action policy as discussed above. The critic network outputs its value estimation of states which is used in updating. Looking at our policy loss we can see that we subtracted our critic's value estimation from our exprienced return Gt. This advantage function stabilizes updates by standardizing the feedback signal (it can be shown that subtracting a baseline does not affect the gradient proportionality). Inuitively, if Gt-V(s) is positive, we experienced more reward than expected, so we increase the probability of recent actions and vice versa. The critic network gets updated by the critic loss. Often the actor and critic share layers, so the terms are combined. The entropy of the policy distribution is added to discourage it from collapsing and encourage exploration. Finally we increase stability by wrapping the policy loss with the CLIP function which bounds the magnitude of single updates. The original PPO paper can be found here [[2]](https://arxiv.org/pdf/1707.06347.pdf).
+Proximal Policy Optimization is a type of actor-critic twist on the policy gradient theory. The actor network outputs parameters of the action policy as discussed above. The critic network outputs its value estimation of states which is used in updating. Looking at our policy loss we can see that we subtracted our critic's value estimation from our exprienced return Gt. This stabilizes updates by standardizing the feedback signal (it can be shown that subtracting a baseline does not affect the gradient proportionality). Inuitively, if Gt-V(s) is positive, we experienced more reward than expected, so we increase the probability of recent actions and vice versa. Gt-V(s) can be replaced with more complex advantage functions in the equation below. The critic network gets updated by the critic loss. Often the actor and critic share layers, so the terms are combined. The entropy of the policy distribution is added to discourage it from collapsing and encourage exploration. Finally we increase stability by wrapping the policy loss with the CLIP function which bounds the magnitude of single updates. The original PPO paper can be found here [[2]](https://arxiv.org/pdf/1707.06347.pdf).
 
 ![Proximal Policy Optimization Equation](images/PPO_equation.png)
-
-We used the beta distribution for our policy, which matches well with our 1 dimensionsal bounded action space.
-
-![Graph of Beta Distribution](images/Beta_Distribution.png)
 
 ## Data Processing
 First, we greyscale and clip regions of the input that have low correlations to performance or are overly complex. This increases training efficiency by focusing more compute on key areas. Second, we extract speed information by summing the pixels of the speed bar and normalizing. Extracting speed this way is more computationally efficient that passing stacked consecutive frames to the CNN as done by others. However information is lost since speed magnitude precision is limited by image resolution.
@@ -79,6 +75,8 @@ Input = preprocessed image<br/>Output = Q values of steering actions
 #### Action Space
 For PPO we split the action space into 2 independantly controlled tasks. That is, we have 1 actor critic netowrk controlling steering, and another identically structured model controlling gas and braking. This is a novel technique never before encountered for the CarRacing environment. Training was done by first training the steering network, with speed controlled by the same deterministic rules used for DDQN. Then, we fixed the steering network, and trained the thrust network. Both networks used the beta distribution, which corresponds nicely with our 1 dimensional bounded action space. Additionally, networks were trained by stochastically sampling actions, while in testing we deterministically used the mean of the distributions for stable mouvements. Note that it is nearly impossible to train distributions by sampling the mean due to the lack of variance in explored actions. 
 
+![Graph of Beta Distribution](images/Beta_Distribution.png) 
+
 #### Training Setup
 PPO architecture was inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) and [[6]](https://arxiv.org/pdf/2111.02202.pdf) respectively. Our model is likely overparamaterized since we simplified the action space and no longer pass in stacked frames. However we kept their structure for ease of comparison.
 
@@ -94,8 +92,6 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577)       | LeakyRelu                      |
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
-
-
 
 
 ## Results and Discussion
