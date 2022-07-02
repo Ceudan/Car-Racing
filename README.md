@@ -41,27 +41,28 @@ We used the beta distribution for our policy, which matches well with our 1 dime
 
 ![Graph of Beta Distribution](images/Beta_Distribution.png)
 
-## Methods
-To reduce required training, we need to simplify the learnable relationship. We accomplished this by simplifying the input image, using a novel technique to extract speed information, and reducing the action space by deterministically controlling speed (agent need only control direction).
-### Data Processing
+## Data Processing
 First, we greyscale and clip regions of the input that have low correlations to performance or are overly complex. This increases training efficiency by focusing more compute on key areas. Second, we extract speed information by summing the pixels of the speed bar and normalizing. Extracting speed this way is more computationally efficient that passing stacked consecutive frames to the CNN as done by others. However information is lost since speed magnitude precision is limited by image resolution.
-
 |                      | Raw Data                    | Processed                     |
 |----------------------|-----------------------------|-------------------------------|
 | Image Simplification | ![](images/unprocessed.png)<br/> &nbsp; &nbsp; &nbsp; (96,96,3) | ![](images/postprocessed.png)<br/> &nbsp; &nbsp; &nbsp; (84,96,1) |
 | Speed Extraction     | ![](images/speed_bar.png)   |speed magnitude ∈ {0,1,2,3,4,5} |
- 
-### Action Space
+
+We also limited the quantity of poor training data by terminating episodes once a 0.1 second interval is spent on the grass and return a -100 reward.
+
+## Methods
+### Double Deep Q Networks
+#### Action Space
+We reduced the action space by deterministically controlling speed (agent need only control direction).This greatly simplified the learnable relationship allowing for lower training requirements.
+
 |          | Steering Angle | Throttle                                        | Brake   |
 |----------|----------------|-------------------------------------------------|---------|
 | Standard | ∈ [-1,1]       | ∈ [0,1]                                         | ∈ [0,1] |
 | Modified | ∈ {-0.3,0,0.3}   | = 0.1 if speed<threshold<br/> &nbsp; &nbsp; &nbsp; 0 if speed>=threshold  | = 0     |
 
-### Reward Shaping
-To prevent the accumulation of poor quality experiences, we terminate episodes once a 0.1 second interval is spent on the grass and return a -100 reward. This relatively high negative reward should make the model focus on simply staying on track (since speed is fixed).
-## Model Architecture
-DQN and PPO architectures were inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) and [[6]](https://arxiv.org/pdf/2111.02202.pdf) respectively. Our models were likely overparamaterized since we reduced the action space and no longer pass in stacked frames. However we kept their structure for ease of comparison.
-### Double Deep Q Networks
+#### Training Setup
+DQN architecture was inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). Our model is likely overparamaterized since we reduced the action space and no longer pass in stacked frames. However we kept their structure for ease of comparison.
+
 Input = preprocessed image<br/>Output = Q values of steering actions
 | Input Shape | Function                |
 |-------------|--------------------------------|
@@ -75,6 +76,12 @@ Input = preprocessed image<br/>Output = Q values of steering actions
 | (50)        | LeakyRelu                      |
 | (3)         | Identity                       |
 ### Proximal Policy Optimization
+#### Action Space
+For PPO we split the action space into 2 independantly controlled policies. That is, we have 1 actor critic netowrk controlling steering, and another identically structured model controlling gas and braking. This is a novel technique that we never encountered. Training was done by first training the steering network, with the speed controlled by the basic deterministic rules used for DQN. Then, we fixed the steering network, and trained the thrust network. Both networks used the beta distribution, which corresponds nicely with our 1 dimensional bounded action space. Additionally, networks were trained by stochastically sampling actions, while in testing we deterministically used the mean of the distributions for increased stability. Note that it is nearly impossible to train distributions by sampling the mean due to the lack of variance in explored actions. 
+
+#### Training Setup
+PPO architecture was inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) and [[6]](https://arxiv.org/pdf/2111.02202.pdf) respectively. Our model is likely overparamaterized since we simplified the action space and no longer pass in stacked frames. However we kept their structure for ease of comparison.
+
 Input = preprocessed image<br/>Output = beta distribution parameters and state value<br/> Note that the fully connected layers diverge.
 | Input Shape | Function                |
 |-------------|--------------------------------|
@@ -87,6 +94,10 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 | (577)       | LeakyRelu                      |
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
+
+
+
+
 ## Results and Discussion
 We succesfully achieved our goal of becoming familiar with reinforcement learning algorithms and libraries, while also obtaining a high score at lower training costs than others (850/900 score at 360 episodes). Still our models were not able to break this ceiling and officially solve the environment (900 score). In future steps...
 
