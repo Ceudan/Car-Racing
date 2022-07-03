@@ -135,10 +135,11 @@ As discussed in methods, we first trained the PPO steering model with the same s
 
 A second hurdle we faced was overcoming turn failures caused by excessive speed. Our thrust agent often produced high speed high score episodes (930 reward), but every 10 episodes or so it would spin out and fail. This dropped the average to 870. We overcame this by over/under emphasizing training data. We simply skipped training on a fraction of high speed episodes to reduce the urge to learn dangerous speeds.
 
-![Image of our training curve](images/PPO_training_curve.PNG) ![Image of SI training curve](images/PPO_other_curve.png)
+![Image of our training curve](images/PPO_training_curve.png) ![Image of SI training curve](images/PPO_other_curve.png)
 
 Figure ?: Our training curve (left), and the top PPO from OpenAI's leaderboard (right)[[5]](https://arxiv.org/pdf/2111.02202.pdf). Dotted line marks our timesteps taken.
 
+https://user-images.githubusercontent.com/78922263/177021714-fc82a6ff-e44c-4936-bf50-61a8f3a372f1.mp4
 
 ## Future Works
 ### Improving Stability
