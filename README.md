@@ -13,8 +13,8 @@ Below are some of the top implementations from OpenAI Gym's official leaderboard
 | PPO | 2760 |820 (*actual) | [writeup](https://github.com/Rafael1s/Deep-Reinforcement-Learning-Udacity/tree/master/CarRacing-From-Pixels-PPO) | 
 | Weight Agnostic Neural Networks | N/A | 893  | [writeup](https://weightagnostic.github.io) | 
 | PPO | ≈3000<br/>(1.6*10<sup>6</sup> environment steps) | 905  | [writeup](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) | 
-| PPO | 5000 | 909 | [writeup](https://github.com/JinayJain/deep-racing) | 
-
+| PPO | 5000 | 909 | [writeup](https://github.com/JinayJain/deep-racing) |
+| [Ours] | 925                   | 917 | [writeup](https://github.com/Ceudan/Car-Racing) |
 Poorer performing and less costly implementations include PPO, DQN, AC3 models done by Stanford Students which never surpassed a score of 600 [[3]](https://pdfcoffee.com/reinforcement-car-racing-with-a3c-pdf-free.html), and a DQN fully connected network that achieved a score of 350 [[4]](https://gist.github.com/lmclupr/b35c89b2f8f81b443166e88b787b03ab#file-race-car-cv2-nn-network-td0-15-possible-actions-ipynb).
 ## Theory
 All reinforcement learning algorithms center around a value estimation of a particular configuration. That is, how much discounted reward can I expect starting off from a particular state V(s), state-action pair Q(s,a), or state distribution J(θ) given a particular policy. These can be estimated in many ways, from one extreme of complete Monte-Carlo rollouts (zero bias, high variance), to the other of one-step bootstrap updates. That is with only information on the difference between adjacent and terminal nodes, there should be only 1 true value graph that we can reconstruct. Optimal actions are chosen by simply selecting the highest next configuration, or by directly modifying an action policy function.
