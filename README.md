@@ -59,7 +59,7 @@ We reduced the action space by deterministically controlling speed (agent need o
 #### Architecture
 DQN architecture was inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). Our model is likely overparamaterized since we reduced the action space and no longer pass in stacked frames. However we kept their structure for ease of comparison.
 
-Input = preprocessed image<br/>Output = Q values of steering actions
+Input = processed image + speed<br/>Output = Q values of steering actions
 | Input Shape | Function                |
 |-------------|--------------------------------|
 | (96,84,1)   | Conv2d + LeakyRelu + Batchnorm |
@@ -84,7 +84,7 @@ Instead of the advantage function Gt-V(s), we used A<sup>GAE</sup>. λ controls 
 #### Architecture
 PPO architecture was inspired by [[5]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf) and [[6]](https://arxiv.org/pdf/2111.02202.pdf) respectively. Our model is likely overparamaterized since we simplified the action space and no longer pass in stacked frames. However we kept their structure for ease of comparison.
 
-Input = preprocessed image<br/>Output = beta distribution parameters and state value<br/> Note that the fully connected layers diverge.
+Input = processed image + speed + steering angle<br/>Output = beta distribution parameters and state value<br/> Note that the fully connected layers diverge.
 | Input Shape | Function                |
 |-------------|--------------------------------|
 | (96,84,1)   | Conv2d + LeakyRelu + Batchnorm |
