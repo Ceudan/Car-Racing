@@ -99,7 +99,7 @@ Input = preprocessed image<br/>Output = beta distribution parameters and state v
 
 
 ## Results and Discussion
-We succesfully achieved our goal of becoming familiar with reinforcement learning algorithms and libraries. Our novel double agent PPO was very succesful, officially beating the environment at a lower training cost than all encountered implementations. DQN did not offically beat the environment, however it also obtained high rewards at low computational costs.
+We succesfully achieved our goal of becoming familiar with reinforcement learning algorithms and libraries. Our novel double agent PPO was very succesful, obtaining the highest test score and 2nd lowest training cost among all encountered implementations to offically beat the environment. DQN did not offically beat the environment, however it also obtained high rewards at low computational costs.
 
 ### Double Deep Q Networks
 Our best model averaged a reward of 850/900 to officially solve the environment. It was able to visit 97% of track tiles travelling at moderate speeds. We did not perform an in-depth hyperparamter search on this DQN, as it was clear that a more complex action space was required to beat the environment.
@@ -129,7 +129,7 @@ https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-
 
 ### Proximal Polixy Optimization
 
-A similar hyperparameter search as DDQN was performed which is not shown again.
+Our final PPO models obtained an average score of 917/900 over 100 test episodes, after 925 training episodes. The only group to beat the environment at a lower cost is multi-university group of students [[6]]([https://arxiv.org/pdf/2111.02202.pdf](https://github.com/AMD-RIPS/RL-2018/blob/master/documents/leaderboard/IPAM-AMD-Car_Racing.ipynb))
 
 As discussed in methods, we first trained the PPO steering model with the same speed control as DDQN. Next, we fixed the steering model and trained the thrust model. One interesting parameter we tuned was the addition of a constant to the softplus output (beta distribution parameters). We found that forcing concave-like shapes (+5) initially accelarated training by avoiding extreme actions, however the agent could not handle the broad uncertainty during finetuning. Allowing uni-modal convex shapes (+1) produced better fine-tuning results. Inuitively we allowed the model to switch between hard acceleration/breaking with great certainty in the sampling outcome, verses balancing some sort of probability mass near the middle.
 
@@ -137,7 +137,7 @@ A second hurdle we faced was overcoming turn failures caused by excessive speed.
 
 ![Image of our training curve](images/PPO_training_curve.png) ![Image of SI training curve](images/PPO_other_curve.png)
 
-Figure ?: Our training curve (left), and the top PPO from OpenAI's leaderboard (right)[[5]](https://arxiv.org/pdf/2111.02202.pdf). Dotted line marks our timesteps taken.
+Figure ?: Our training curve (left), and the top PPO from OpenAI's leaderboard (right)[[7]](https://arxiv.org/pdf/2111.02202.pdf). Dotted line marks our timesteps taken.
 
 ![Image of PPO test histogram](images/PPO_scores_histogram.png)
 
