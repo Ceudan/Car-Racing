@@ -122,7 +122,7 @@ Table 1. Hyperparameter search at the critical minimum speed required to beat en
 
 ![Image of our training curve](images/training_curve.PNG) ![Image of SI training curve](images/SI_training_curve.png)
 
-Figure ?: Our training curve (left), and one from OpenAI's leaderboard (right)[[4]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). Dotted line marks our timesteps taken.
+Figure ?: Our training curve (left), and the top DQN from OpenAI's leaderboard (right)[[4]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). Dotted line marks our timesteps taken.
 
 https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-9db1-d3487fed0a82.mp4
 
@@ -133,7 +133,10 @@ A similar hyperparameter search as DDQN was performed which is not shown again.
 
 As discussed in methods, we first trained the PPO steering model with the same speed control as DDQN. Next, we fixed the steering model and trained the thrust model. One interesting parameter we tuned was the addition of a constant to the softplus output (beta distribution parameters). We found that forcing concave-like shapes (+5) initially accelarated training by avoiding extreme actions, however the agent could not handle the broad uncertainty during finetuning. Allowing uni-modal convex shapes (+1) produced better fine-tuning results. Inuitively we allowed the model to switch between hard acceleration/breaking with great certainty in the sampling outcome, verses balancing some sort of probability mass near the middle.
 
-A second hurdle we faced was overcoming turn failures caused by excessive speed. Our thrust agent often produced high speed high score episodes (930 reward), but every 10 episodes or so it would spin out and fail. This dropped the average to 870. We overcame this by over/under emphasizing training data. We simply skipped training on a fraction of high speed episodes to reduce the urge to learn dangerous speeds. Then we handpicked our final test model after a modal collapse caused by excessive breaking, knowing that this model had a greater tendency to break.
+A second hurdle we faced was overcoming turn failures caused by excessive speed. Our thrust agent often produced high speed high score episodes (930 reward), but every 10 episodes or so it would spin out and fail. This dropped the average to 870. We overcame this by over/under emphasizing training data. We simply skipped training on a fraction of high speed episodes to reduce the urge to learn dangerous speeds.
+
+
+Figure ?: Our training curve (left), and the top PPO from OpenAI's leaderboard (right)[[5]](https://arxiv.org/pdf/2111.02202.pdf). Dotted line marks our timesteps taken.
 
 
 ## Future Works
