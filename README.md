@@ -87,9 +87,9 @@ PPO architecture was inspired by [[5]](https://github.com/jperod/AI-self-driving
 Input = processed image + speed + steering angle<br/>Output = beta distribution parameters and state value<br/> Note that the fully connected layers diverge.
 | Input Shape | Function                |
 |-------------|--------------------------------|
-| (96,84,1)   | Conv2d + LeakyRelu + Batchnorm |
+| (96,84,1)   | Conv2d + LeakyRelu             |
 | (20,23,8)   | Max-Pooling                    |
-| (10,11,8)   | Conv2d + LeakyRelu + Batchnorm |
+| (10,11,8)   | Conv2d + LeakyRelu             |
 | (12,13,16)  | Max-Pooling                    |
 | (6,6,16)    | LeakyRelu + Flatten            |
 | (576+2)     | speed,steering appended to tensor       |
