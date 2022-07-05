@@ -92,7 +92,7 @@ Input = processed image + speed + steering angle<br/>Output = beta distribution 
 | (10,11,8)   | Conv2d + LeakyRelu             |
 | (12,13,16)  | Max-Pooling                    |
 | (6,6,16)    | LeakyRelu + Flatten            |
-| (576+2)     | speed,steering appended to tensor       |
+| (576+2)     | speed, steering appended to tensor       |
 | (577)       | LeakyRelu                      |
 | (577), &nbsp; &nbsp; &nbsp; &nbsp; (1)| LeakyRelu, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Identity|
 | (2)         | Softplus                       |
