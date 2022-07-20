@@ -137,7 +137,7 @@ A second hurdle we faced was overcoming turn failures caused by excessive speed.
 
 ![Image of our training curve](images/PPO_training_curve.png) ![Image of SI training curve](images/PPO_other_curve.png)
 
-Figure ?: Our training curve (top), and the top PPO from OpenAI's leaderboard (bottom)[[7]](https://arxiv.org/pdf/2111.02202.pdf). Dotted line marks our timesteps taken.
+Figure ?: Our training curve (top), and the top PPO from OpenAI's leaderboard (bottom)[[7]](https://arxiv.org/pdf/2111.02202.pdf). They required approximately 7 times more training steps (dotted line marks our timesteps taken).
 
 ![Image of PPO test histogram](images/PPO_scores_histogram.png)
 
