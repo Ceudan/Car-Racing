@@ -122,7 +122,7 @@ Table 1. Hyperparameter search at the critical minimum speed required to beat en
 
 ![Image of our training curve](images/training_curve.PNG) ![Image of SI training curve](images/SI_training_curve.png)
 
-Figure ?: Our training curve (left), and the top DQN from OpenAI's leaderboard (right)[[4]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). Dotted line marks our timesteps taken.
+Figure ?: Our training curve (left), and the top DQN from OpenAI's leaderboard (right)[[4]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). They took approximately an order of magnitude more training steps (dotted line marks our timesteps taken).
 
 https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-9db1-d3487fed0a82.mp4
 
