@@ -122,7 +122,7 @@ Table 1. Hyperparameter search at the critical minimum speed required to beat en
 
 ![Image of our training curve](images/training_curve.PNG) ![Image of SI training curve](images/SI_training_curve.png)
 
-Figure ?: Our training curve (left), and the top DQN from OpenAI's leaderboard (right)[[4]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). They took approximately an order of magnitude more training steps (dotted line marks our total timesteps).
+Figure ?: Our training curve (left), and the top DQN from OpenAI's leaderboard (right)[[4]](https://github.com/jperod/AI-self-driving-race-car-Deep-Reinforcement-Learning/blob/master/SI_Final_Project.pdf). We took approximately an order of magnitude less training steps (dotted line marks our total timesteps).
 
 https://user-images.githubusercontent.com/78922263/173864627-4309b90c-84f0-414c-9db1-d3487fed0a82.mp4
 
@@ -137,7 +137,7 @@ A second hurdle we faced was overcoming turn failures caused by excessive speed.
 
 ![Image of our training curve](images/PPO_training_curve.png) ![Image of SI training curve](images/PPO_other_curve.png)
 
-Figure ?: Our training curve (top), and the top PPO from OpenAI's leaderboard (bottom)[[7]](https://arxiv.org/pdf/2111.02202.pdf). They required approximately 7 times more training steps (dotted line marks our total timesteps).
+Figure ?: Our training curve (top), and the top PPO from OpenAI's leaderboard (bottom)[[7]](https://arxiv.org/pdf/2111.02202.pdf). We required approximately 7 times less training steps (dotted line marks our total timesteps).
 
 ![Image of PPO test histogram](images/PPO_scores_histogram.png)
 
