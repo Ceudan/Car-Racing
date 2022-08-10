@@ -49,7 +49,7 @@ We also limited the quantity of poor training data by terminating episodes once 
 ## Methods
 ### Double Deep Q Networks
 #### Setup
-We reduced the action space by deterministically controlling speed (agent need only control direction). DQN was given a simple action space to first test the relationship's learnability.
+For DQN we started off with a reduced action space. Speed was deterministically set so the agent need only control direction.
 
 |          | Steering Angle | Throttle                                        | Brake   |
 |----------|----------------|-------------------------------------------------|---------|
