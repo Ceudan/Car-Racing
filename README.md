@@ -1,4 +1,17 @@
 # Learning Reinforcement Learning via Car Racing
+## Abstract
+I hand coded multiple reinforcement learning algorithms for the openai Car Racing environment. Namely I applied Double Deep Q networks and Proximal Policy Optimization. The purpose of this project was to become familiar with RL libraries, algorithms and hyperparameter tuning. While exploring, I gave myself a research question. That is, can I officially beat the environment at a lower computational cost than others?
+
+My PPO project was very succesful, obtaining the highest test score and beating the environment at the 2nd lowest training cost on [OpenAI's official Car Racing leaderboard](https://github.com/openai/gym/wiki/Leaderboard). (917/900 score averaged over 100 test episodes, after 925 training episodes). Unlike others that simply threw compute at the problem, I used a method fitted for the environment. Mainly, I simplified the learnable relationship by seperating the steering and thrust actions to 2 independantly trained agents. Additionally, I reduced the computer vision burden on the actor/critic networks by moving speed estimation to a seperate deterministic process. These simplifications reduced training cost and convergence complications, allowing me to run many more design iterations than others. 
+
+https://user-images.githubusercontent.com/78922263/177021714-fc82a6ff-e44c-4936-bf50-61a8f3a372f1.mp4
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ## Background
 The purpose of this project was to become familiar with reinforcement learning libraries, algorithms and hyperparameter tuning. To accomplish this I hand coded the Double Deep Q Learning and Proximal Policy Optimization algorithms for OpenAI Gym's Car Racing Environment [[1]](https://www.gymlibrary.ml/environments/box2d/car_racing/)). While exploring, I gave myself a research question to avoid simply copying other's implementations. That is, can I obtain high results at a significantly lower computational cost than others?
 ## Related Works
